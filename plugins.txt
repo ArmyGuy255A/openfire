@@ -1,0 +1,15 @@
+https://www.igniterealtime.org/projects/openfire/plugins/1.3.0/userstatus.jar
+https://www.igniterealtime.org/projects/openfire/plugins/1.2.0/bookmarks.jar
+https://www.igniterealtime.org/projects/openfire/plugins/1.9.3/broadcast.jar
+https://www.igniterealtime.org/projects/openfire/plugins/1.2.0/certificatemanager.jar
+https://www.igniterealtime.org/projects/openfire/plugins/3.0.0/hazelcast.jar
+https://www.igniterealtime.org/projects/openfire/plugins/1.8.3/pade.jar
+https://www.igniterealtime.org/projects/openfire/plugins/2.6.1/monitoring.jar
+https://www.igniterealtime.org/projects/openfire/plugins/1.2.4/motd.jar
+https://www.igniterealtime.org/projects/openfire/plugins/3.3.2/packetFilter.jar
+https://www.igniterealtime.org/projects/openfire/plugins/1.7.3/presence.jar
+https://www.igniterealtime.org/projects/openfire/plugins/1.1.0/randomavatar.jar
+https://www.igniterealtime.org/projects/openfire/plugins/1.7.4/search.jar
+https://www.igniterealtime.org/projects/openfire/plugins/2.6.1/monitoring.jar
+https://www.igniterealtime.org/projects/openfire/plugins/1.0.1/s2sconformancetest.jar
+https://www.igniterealtime.org/projects/openfire/plugins/1.11.0/restAPI.jar

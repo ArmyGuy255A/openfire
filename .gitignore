@@ -3,3 +3,6 @@
 
 # Ignore the plugins directory itself
 plugins/
+
+# Ignore the windows folder where all Windows files are downloaded
+windows/
