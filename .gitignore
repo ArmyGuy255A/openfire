@@ -1,0 +1,5 @@
+# Ignore all .jar files in the plugins directory
+*.jar
+
+# Ignore the plugins directory itself
+plugins/
