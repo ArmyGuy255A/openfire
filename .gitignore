@@ -1,5 +1,6 @@
 # Ignore all .jar files in the plugins directory
 *.jar
+*.iso
 
 # Ignore the plugins directory itself
 plugins/

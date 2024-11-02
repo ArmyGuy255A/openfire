@@ -1,55 +1,30 @@
-FROM openjdk:24-jdk-slim
+FROM openjdk:23-jdk-slim
 
-RUN apt-get update && \
-    apt-get install -y wget openssl vim nano && \
-    apt-get clean
+# Install required packages
+RUN apt update && \
+    apt install -y --no-install-recommends wget openssl vim nano && \
+    apt clean && rm -rf /var/lib/apt/lists/*
 
+# Set the Openfire version
 ARG OPENFIRE_VERSION=4_9_0
 ENV OF_VERSION=${OPENFIRE_VERSION}
 
+# Set the working directory
 WORKDIR /usr/share
 
-RUN wget https://igniterealtime.org/downloadServlet?filename=openfire/openfire_${OF_VERSION}.tar.gz
+# Download Openfire
+RUN wget -O openfire.tar.gz "https://igniterealtime.org/downloadServlet?filename=openfire/openfire_${OF_VERSION}.tar.gz"
 
-RUN mv download* openfire.tar.gz
-RUN tar -xf openfire.tar.gz
-RUN chmod 755 ./openfire
-RUN rm openfire.tar.gz
+# Extract, set permissions, and clean up
+RUN tar -xf openfire.tar.gz && \
+    chmod 755 ./openfire && \
+    rm openfire.tar.gz
 
-# Add Plugins
+# Add plugins
 ADD Plugins /usr/share/openfire/plugins
 
-#Admin Console
-EXPOSE 9090
-EXPOSE 9091
+# Expose ports
+EXPOSE 9090 9091 5222 5223 5269 5270 5262 7070 7443 80 443 5275 5276 7777
 
-#Client to Server
-EXPOSE 5222
-EXPOSE 5223
-
-#Server to Server
-EXPOSE 5269
-EXPOSE 5270
-
-#Connection Manager
-EXPOSE 5262
-
-#HTTP Binding
-EXPOSE 7070
-EXPOSE 7443
-EXPOSE 80
-EXPOSE 443
-
-#External Components
-EXPOSE 5275
-EXPOSE 5276 
-
-#File Transfer
-EXPOSE 7777
-
-#TODO
-
-
-# CMD [ "chown -R daemon:daemon ." ]
-
-ENTRYPOINT [ "bash", "/usr/share/openfire/bin/openfire", "run" ]
+# Set entrypoint
+ENTRYPOINT [ "sh", "/usr/share/openfire/bin/openfire", "run" ]
