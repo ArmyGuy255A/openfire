@@ -15,7 +15,10 @@ $currentBranch = git branch --show-current
 $expectedBranch = "openfire-$openfireVersion"
 
 # Check if the branch already exists
-$branchExists = $(git branch --list "$expectedBranch").trim()
+$branchExists = $(git branch --list "$expectedBranch")
+if ($branchExists) {
+    $branchExists = $branchExists.Trim()
+}
 
 if ($branchExists) {
     Write-Host "Branch $expectedBranch already exists." -ForegroundColor Green
@@ -41,6 +44,9 @@ $tagExists = git tag -l "$tagName"
 
 if ($tagExists) {
     Write-Host "Tag $tagName already exists on the current branch." -ForegroundColor Green
+    Write-Host "Removing the tag and re-tagging this version..." -ForegroundColor Yellow
+    git tag -d "$tagName"
+    git tag -a "$tagName" -m "Running Openfire Version: $openfireVersion"
 } else {
     Write-Host "Tag $tagName does not exist. Tagging this version..." -ForegroundColor Yellow
 
