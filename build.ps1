@@ -68,8 +68,6 @@ if ($matches.Length -gt 0) {
     Write-Host "No remote found. Skipping attempt to push to remote repository." -ForegroundColor Yellow
 }
 
-
-
 # Push the branch and tag to the remote repository if we're online
 $result = Invoke-WebRequest $remoteRepo -UseBasicParsing -TimeoutSec 2 -ErrorAction SilentlyContinue
 
@@ -81,7 +79,9 @@ if ($result.StatusCode -eq 200) {
 }
 
 # Build and tag the Docker image
+$buildArgOpenfireVersion = $openfireVersion.Replace(".", "_")
 docker build `
+    --build-arg OPENFIRE_VERSION=$buildArgOpenfireVersion `
     -t "armyguy255a/openfire:latest" `
-    -t "armyguy255a/openfire:$openfireVersion" `
-    -t "armyguy255a/openfire:v$newBuildVersion" .
+    -t ("armyguy255a/openfire:{0}" -f $openfireVersion) `
+    -t ("armyguy255a/openfire:{0}v{1}" -f $openfireVersion, $newBuildVersion) .

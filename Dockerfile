@@ -5,10 +5,8 @@ RUN apt update && \
     apt install -y --no-install-recommends wget openssl vim nano && \
     apt clean && rm -rf /var/lib/apt/lists/*
 
-COPY openfire_version.txt /openfire_version.txt
-
 # Set the Openfire version
-ARG OPENFIRE_VERSION=$(cat /openfire_version.txt)
+ARG OPENFIRE_VERSION
 ENV OF_VERSION=${OPENFIRE_VERSION}
 
 # Set the working directory
