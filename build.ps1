@@ -33,7 +33,7 @@ if ($branchExists) {
     Write-Host "Branch $expectedBranch already exists." -ForegroundColor Green
 } else {
     Write-Host "Branch $expectedBranch does not exist. Preparing a new branch for this version..." -ForegroundColor Yellow
-    git branch "$expectedBranch"
+    git checkout -b "$expectedBranch"
 
     # Reset buildver.txt
     Set-Content -Path buildver.txt -Value "0"
