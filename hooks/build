@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Read the version from the file
+# Read the version from the file, an replace the dots with underscores
 OPENFIRE_VERSION=$(cat openfire_version.txt | sed 's/\./_/g')
 
 # Build the Docker image with the build argument

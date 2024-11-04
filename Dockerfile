@@ -31,12 +31,12 @@ RUN useradd -r -s /bin/false openfire
 # Set permissions
 RUN chown -R openfire:openfire /usr/share/openfire
 
+# Switch to the openfire user
+USER openfire
+
 # Copy the entrypoint script and make it executable
 COPY entrypoint.sh /usr/share/openfire/entrypoint.sh
 RUN chmod +x /usr/share/openfire/entrypoint.sh
-
-# Switch to the openfire user
-USER openfire
 
 # Expose ports
 EXPOSE 9090 9091 5222 5223 5269 5270 5262 7070 7443 80 443 5275 5276 7777
