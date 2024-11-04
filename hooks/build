@@ -1,8 +1,7 @@
 #!/bin/sh
 
 # Read the version from the file
-ls -al
-OPENFIRE_VERSION=$(cat buildver.txt)
+OPENFIRE_VERSION=$(cat openfire_version.txt)
 
 # Build the Docker image with the build argument
 docker build --build-arg OPENFIRE_VERSION=$OPENFIRE_VERSION -t armyguy255a/openfire:$OPENFIRE_VERSION .
