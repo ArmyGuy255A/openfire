@@ -20,4 +20,4 @@ docker run `
  -p 9001:9001 `
  --name openfire `
  -v 'openfire-data:/usr/share/openfire' `
- armyguy255a/openfire:4.9.0
+ armyguy255a/openfire:latest
