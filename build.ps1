@@ -104,3 +104,5 @@ docker build `
     -t "armyguy255a/openfire:latest" `
     -t ("armyguy255a/openfire:{0}" -f $openfireVersion) `
     -t ("armyguy255a/openfire:{0}v{1}" -f $openfireVersion, $newBuildVersion) .
+
+    
