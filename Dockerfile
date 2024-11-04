@@ -1,4 +1,5 @@
 FROM openjdk:24-jdk-slim
+ENV JAVA_VERSION=23
 
 # Install required packages
 RUN apt update && \
@@ -8,7 +9,6 @@ RUN apt update && \
 # Set the Openfire version
 ARG OPENFIRE_VERSION
 ENV OF_VERSION=${OPENFIRE_VERSION}
-ENV JAVA_VERSION=24
 
 # Set the working directory
 WORKDIR /usr/share
