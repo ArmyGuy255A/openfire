@@ -6,7 +6,7 @@ RUN apt update && \
     apt clean && rm -rf /var/lib/apt/lists/*
 
 # Set the Openfire version
-ARG OPENFIRE_VERSION=4_9_0
+ARG OPENFIRE_VERSION
 ENV OF_VERSION=${OPENFIRE_VERSION}
 
 # Set the working directory
