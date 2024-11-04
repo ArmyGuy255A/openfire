@@ -11,29 +11,32 @@ $openfireVersion = Get-Content openfire_version.txt
 # Check if we're on the correct openfire branch
 $currentBranch = git branch --show-current
 
+# Store the expected branch name
+$expectedBranch = "openfire-$openfireVersion"
+
 # Check if the branch already exists
-$branchExists = $(git branch --list "$openfireVersion").trim()
+$branchExists = $(git branch --list "$expectedBranch").trim()
 
 if ($branchExists) {
-    Write-Host "Branch $openfireVersion already exists." -ForegroundColor Green
+    Write-Host "Branch $expectedBranch already exists." -ForegroundColor Green
 } else {
-    Write-Host "Branch $openfireVersion does not exist. Preparing a new branch for this version..." -ForegroundColor Yellow
-    git branch "$openfireVersion"
+    Write-Host "Branch $expectedBranch does not exist. Preparing a new branch for this version..." -ForegroundColor Yellow
+    git branch "$expectedBranch"
 
     # Reset buildver.txt
     Set-Content -Path buildver.txt -Value "0"
 }
 
 # Switch to the branch if we're not already on it
-if ($currentBranch -ne $openfireVersion) {
-    Write-Host "Switching to branch $openfireVersion..." -ForegroundColor Yellow
-    git checkout "$openfireVersion"
+if ($currentBranch -ne $expectedBranch) {
+    Write-Host "Switching to branch $expectedBranch..." -ForegroundColor Yellow
+    git checkout "$expectedBranch"
 } else {
-    Write-Host "Already on branch $openfireVersion." -ForegroundColor Green
+    Write-Host "Already on branch $expectedBranch." -ForegroundColor Green
 }
 
 # Check if the tag already exists on this branch
-$tagName = "openfire-$openfireVersion"
+$tagName = "$openfireVersion"
 $tagExists = git tag -l "$tagName"
 
 if ($tagExists) {
@@ -72,8 +75,8 @@ if ($matches.Length -gt 0) {
 $result = Invoke-WebRequest $remoteRepo -UseBasicParsing -TimeoutSec 2 -ErrorAction SilentlyContinue
 
 if ($result.StatusCode -eq 200) {
-    Write-Host "Pushing branch $openfireVersion and tag $openfireVersion to the remote repository..." -ForegroundColor Green
-    git push --set-upstream origin $openfireVersion
+    Write-Host "Pushing branch $expectedBranch and tag $expectedBranch to the remote repository..." -ForegroundColor Green
+    git push --set-upstream origin $expectedBranch
 } else {
     Write-Host "Not connected to the internet. Skipping push to remote repository." -ForegroundColor Yellow
 }
