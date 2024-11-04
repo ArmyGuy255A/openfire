@@ -12,7 +12,7 @@ $openfireVersion = Get-Content openfire_version.txt
 $currentBranch = git branch --show-current
 
 # Store the expected branch name
-$expectedBranch = "openfire-$openfireVersion"
+$expectedBranch = "$openfireVersion"
 
 # Check if the branch already exists
 $branchExists = $(git branch --list "$expectedBranch")
@@ -39,7 +39,7 @@ if ($currentBranch -ne $expectedBranch) {
 }
 
 # Check if the tag already exists on this branch
-$tagName = "$openfireVersion"
+$tagName = "openfire-$openfireVersion"
 $tagExists = git tag -l "$tagName"
 
 if ($tagExists) {
