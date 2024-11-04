@@ -3,7 +3,10 @@
 *.iso
 
 # Ignore the plugins directory itself
-plugins/
+plugins/*
+
+# Include all .placeholder files
+!*.placeholder
 
 # Ignore the windows folder where all Windows files are downloaded
 windows/
