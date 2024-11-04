@@ -45,7 +45,7 @@ if ($tagExists) {
 }
 
 # Increment the build version
-$buildVersion = Get-Content buildver.txt
+[int]$buildVersion = Get-Content buildver.txt
 $newBuildVersion = $buildVersion + 1
 Set-Content -Path buildver.txt -Value $newBuildVersion
 
@@ -74,7 +74,7 @@ $result = Invoke-WebRequest $remoteRepo -UseBasicParsing -TimeoutSec 2 -ErrorAct
 
 if ($result.StatusCode -eq 200) {
     Write-Host "Pushing branch $openfireVersion and tag $openfireVersion to the remote repository..." -ForegroundColor Green
-    git push origin "$openfireVersion"
+    git push --set-upstream origin $openfireVersion
 } else {
     Write-Host "Not connected to the internet. Skipping push to remote repository." -ForegroundColor Yellow
 }
