@@ -97,7 +97,6 @@ if ($checkRemoteRepo) {
     }
 }
 
-
 # Build and tag the Docker image
 $buildArgOpenfireVersion = $openfireVersion.Replace(".", "_")
 docker build `
