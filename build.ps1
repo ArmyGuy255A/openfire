@@ -82,13 +82,13 @@ if ($PushToGit) {
         Write-Host "No remote repository found. Checking if we're online..." -ForegroundColor Yellow
     }
 
-    # Push the branch and tag to the remote repository if we're online
+    # Push the branch and to the remote repository if we're online
     if ($checkRemoteRepo) {
         Write-Host "Checking if we're online..." -ForegroundColor Yellow
         $result = Invoke-WebRequest $remoteRepo -UseBasicParsing -TimeoutSec 2 -ErrorAction SilentlyContinue
 
         if ($result.StatusCode -eq 200) {
-            Write-Host "Pushing branch $expectedBranch and tag $expectedBranch to the remote repository..." -ForegroundColor Green
+            Write-Host "Pushing branch $expectedBranch to the remote repository..." -ForegroundColor Green
             git push --set-upstream origin $expectedBranch
         } else {
             Write-Host "Not connected to the internet. Skipping push to remote repository." -ForegroundColor Yellow
