@@ -1,3 +1,4 @@
+$remoteRegistry = "armyguy255a/openfire"
 
 # Download Plugins
 ./Download-Files.ps1 -FileName Plugins.txt
@@ -46,7 +47,8 @@ $tagExists = git tag -l "$tagName"
 if ($tagExists) {
     Write-Host "Tag $tagName already exists on the current branch." -ForegroundColor Green
     Write-Host "Removing the tag and re-tagging this version..." -ForegroundColor Yellow
-    git tag -d "$tagName"
+    git tag -d $(git tag -l)
+    # git tag -d "$tagName"
     git tag -a "$tagName" -m "Running Openfire Version: $openfireVersion"
 } else {
     Write-Host "Tag $tagName does not exist. Tagging this version..." -ForegroundColor Yellow
@@ -105,3 +107,6 @@ docker build `
     -t "armyguy255a/openfire:latest" `
     -t ("armyguy255a/openfire:{0}" -f $openfireVersion) `
     -t ("armyguy255a/openfire:{0}v{1}" -f $openfireVersion, $newBuildVersion) .
+
+# Push the Docker image to the Registry
+docker push "armyguy255a/openfire:latest" 
