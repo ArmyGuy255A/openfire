@@ -1,3 +1,4 @@
+
 # Download Plugins
 ./Download-Files.ps1 -FileName Plugins.txt
 
@@ -53,9 +54,30 @@ Set-Content -Path buildver.txt -Value $newBuildVersion
 git add .
 git commit -m ("{0}:v{1}" -f $openfireVersion, $newBuildVersion )
 
-# Push the branch and tag to the remote repository
-git push origin "openfire-$openfireVersion"
-git push origin "$openfireVersion"
+$remoteRepo = git remote -v | Select-String -Pattern "origin\s+" | ForEach-Object {
+    ($_ -split '\s+')[1]  # Extract the URL part
+}
+
+$matches = $remoteRepo -match "^https://(.+?)/"
+
+if ($matches.Length -gt 0) {
+    $remoteRepo = $matches[0]
+    Write-Host "Remote repository found: $remoteRepo" -ForegroundColor Green
+} else {
+    Write-Host "No remote found. Skipping attempt to push to remote repository." -ForegroundColor Yellow
+}
+
+
+
+# Push the branch and tag to the remote repository if we're online
+$result = Invoke-WebRequest $remoteRepo -UseBasicParsing -TimeoutSec 2 -ErrorAction SilentlyContinue
+
+if ($result.StatusCode -eq 200) {
+    Write-Host "Pushing branch $openfireVersion and tag $openfireVersion to the remote repository..." -ForegroundColor Yellow
+    git push origin "$openfireVersion"
+} else {
+    Write-Host "Not connected to the internet. Skipping push to remote repository." -ForegroundColor Yellow
+}
 
 # Build and tag the Docker image
 docker build `
