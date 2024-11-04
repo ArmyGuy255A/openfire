@@ -25,10 +25,9 @@ ADD Plugins /usr/share/openfire/plugins
 
 # Copy the entrypoint script and make it executable
 COPY entrypoint.sh /usr/share/openfire/entrypoint.sh
-RUN chmod +x /usr/share/openfire/entrypoint.sh
 
-# Allow the openfire user to run the entrypoint script
-RUN chown openfire:openfire /usr/share/openfire/entrypoint.sh
+RUN chmod +x /usr/share/openfire/entrypoint.sh && \
+    chmod +x /usr/share/openfire/bin/openfire.sh
 
 # Create an openfire user
 RUN useradd -r -s /bin/false openfire
