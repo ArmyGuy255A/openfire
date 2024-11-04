@@ -4,10 +4,10 @@ param (
     [string]
     $RemoteRegistry = "armyguy255a/openfire",
     [Parameter()]
-    [bool]
+    [switch]
     $PushToRegistry = $false,
     [Parameter()]
-    [bool]
+    [switch]
     $PushToGit = $false
 )
 
