@@ -58,7 +58,7 @@ $remoteRepo = git remote -v | Select-String -Pattern "origin\s+" | ForEach-Objec
     ($_ -split '\s+')[1]  # Extract the URL part
 }
 
-$matches = $remoteRepo -match "^https://(.+?)/"
+$remoteRepo -match "^https://(.+?)/"
 
 if ($matches.Length -gt 0) {
     $remoteRepo = $matches[0]
@@ -73,7 +73,7 @@ if ($matches.Length -gt 0) {
 $result = Invoke-WebRequest $remoteRepo -UseBasicParsing -TimeoutSec 2 -ErrorAction SilentlyContinue
 
 if ($result.StatusCode -eq 200) {
-    Write-Host "Pushing branch $openfireVersion and tag $openfireVersion to the remote repository..." -ForegroundColor Yellow
+    Write-Host "Pushing branch $openfireVersion and tag $openfireVersion to the remote repository..." -ForegroundColor Green
     git push origin "$openfireVersion"
 } else {
     Write-Host "Not connected to the internet. Skipping push to remote repository." -ForegroundColor Yellow
