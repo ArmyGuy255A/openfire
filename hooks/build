@@ -4,4 +4,4 @@
 OPENFIRE_VERSION=$(cat openfire_version.txt | sed 's/\./_/g')
 
 # Build the Docker image with the build argument
-docker build --build-arg OPENFIRE_VERSION=$OPENFIRE_VERSION -t $IMAGE_NAME:$OPENFIRE_VERSION -t $IMAGE_NAME:latest .
+docker build --build-arg OPENFIRE_VERSION=$OPENFIRE_VERSION -t $IMAGE_NAME -t $DOCKER_REPO:latest .

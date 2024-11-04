@@ -38,8 +38,6 @@ RUN chown -R openfire:openfire /usr/share/openfire
 # Switch to the openfire user
 USER openfire
 
-
-
 # Expose ports
 EXPOSE 9090 9091 5222 5223 5269 5270 5262 7070 7443 80 443 5275 5276 7777
 
