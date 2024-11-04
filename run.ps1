@@ -1,3 +1,5 @@
+$openfireVersion = Get-Content openfire_version.txt
+
 docker stop openfire
 docker rm openfire -v
 docker volume rm openfire-data
@@ -19,5 +21,4 @@ docker run `
  -p 9001:9001 `
  --name openfire `
  -v 'openfire-data:/usr/share/openfire' `
- armyguy255a/openfire:4.9.1
- 
+ armyguy255a/openfire:$openfireVersion
