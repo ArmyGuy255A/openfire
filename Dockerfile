@@ -1,5 +1,4 @@
-FROM openjdk:24-jdk-slim
-ENV JAVA_VERSION=23
+FROM openjdk:23-jdk-slim
 
 # Install required packages
 RUN apt update && \
