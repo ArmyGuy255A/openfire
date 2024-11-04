@@ -92,6 +92,16 @@ COPY openfire.xml /usr/share/openfire/conf/openfire.xml
 
 # Define any additional environment variables or volumes as needed
 ENV MY_CUSTOM_SETTING=value
+
+# Switch to the openfire user
+USER openfire
+
+# Expose ports
+EXPOSE 9090 9091 5222 5223 5269 5270 5262 7070 7443 80 443 5275 5276 7777
+
+# Set entrypoint
+ENTRYPOINT ["/usr/share/openfire/entrypoint.sh"]
+
 ```
 
 Build your custom image:
