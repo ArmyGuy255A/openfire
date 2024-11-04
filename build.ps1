@@ -48,22 +48,22 @@ if ($currentBranch -ne $expectedBranch) {
 }
 
 # Check if the tag already exists on this branch
-$tagName = "openfire-$openfireVersion"
-$tagExists = git tag -l "$tagName"
+# $tagName = "openfire-$openfireVersion"
+# $tagExists = git tag -l "$tagName"
 
 
-if ($tagExists) {
-    Write-Host "Tag $tagName already exists on the current branch." -ForegroundColor Green
-    Write-Host "Removing the tag and re-tagging this version..." -ForegroundColor Yellow
-    git tag -d $(git tag -l)
-    # git tag -d "$tagName"
-    git tag -a "$tagName" -m "Running Openfire Version: $openfireVersion"
-} else {
-    Write-Host "Tag $tagName does not exist. Tagging this version..." -ForegroundColor Yellow
+# if ($tagExists) {
+#     Write-Host "Tag $tagName already exists on the current branch." -ForegroundColor Green
+#     Write-Host "Removing the tag and re-tagging this version..." -ForegroundColor Yellow
+#     git tag -d $(git tag -l)
+#     # git tag -d "$tagName"
+#     git tag -a "$tagName" -m "Running Openfire Version: $openfireVersion"
+# } else {
+#     Write-Host "Tag $tagName does not exist. Tagging this version..." -ForegroundColor Yellow
 
-    # Tag the branch with the openfire version
-    git tag -a "$tagName" -m "Running Openfire Version: $openfireVersion"
-}
+#     # Tag the branch with the openfire version
+#     git tag -a "$tagName" -m "Running Openfire Version: $openfireVersion"
+# }
 
 # Increment the build version
 [int]$buildVersion = Get-Content buildver.txt
