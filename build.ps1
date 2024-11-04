@@ -1,4 +1,12 @@
-$remoteRegistry = "armyguy255a/openfire"
+[CmdletBinding()]
+param (
+    [Parameter()]
+    [string]
+    $RemoteRegistry = "armyguy255a/openfire",
+    [Parameter()]
+    [bool]
+    $PushToRegistry = $false
+)
 
 # Download Plugins
 ./Download-Files.ps1 -FileName Plugins.txt
@@ -104,9 +112,11 @@ if ($checkRemoteRepo) {
 $buildArgOpenfireVersion = $openfireVersion.Replace(".", "_")
 docker build `
     --build-arg OPENFIRE_VERSION=$buildArgOpenfireVersion `
-    -t "armyguy255a/openfire:latest" `
-    -t ("armyguy255a/openfire:{0}" -f $openfireVersion) `
-    -t ("armyguy255a/openfire:{0}v{1}" -f $openfireVersion, $newBuildVersion) .
+    -t ("{0}:latest" -f $RemoteRegistry) `
+    -t ("{0}:{1}" -f $RemoteRegistry, $openfireVersion) `
+    -t ("{0}:{1}v{2}" -f $RemoteRegistry, $openfireVersion, $newBuildVersion) .
 
-# Push the Docker image to the Registry
-docker push "armyguy255a/openfire:latest" 
+if ($PushToRegistry) {
+    # Push the Docker image to the Registry
+    docker push ("{0}:{1}" -f $remoteRegistry, $openfireVersion) 
+}
