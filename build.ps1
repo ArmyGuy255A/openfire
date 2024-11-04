@@ -64,28 +64,39 @@ Set-Content -Path buildver.txt -Value $newBuildVersion
 git add .
 git commit -m ("{0}:v{1}" -f $openfireVersion, $newBuildVersion )
 
-$remoteRepo = git remote -v | Select-String -Pattern "origin\s+" | ForEach-Object {
+$remoteRepo = $null
+$remoteRepos = git remote -v | Select-String -Pattern "origin\s+" | ForEach-Object {
     ($_ -split '\s+')[1]  # Extract the URL part
 }
 
-$remoteRepo -match "^https://(.+?)/"
+$checkRemoteRepo = $false
+if ($null -ne $remoteRepos -and $remoteRepos.Length -gt 0) {
 
-if ($matches.Length -gt 0) {
-    $remoteRepo = $matches[0]
-    Write-Host "Remote repository found: $remoteRepo" -ForegroundColor Green
+    $remoteRepo = $remoteRepos[0]
+    if (-not $remoteRepo.Contains("http")) {
+        Write-Host "Remote repository is not an HTTP URL. Skipping an attempt to push."
+    } else {
+        Write-Host "Remote repository found: $remoteRepo" -ForegroundColor Green
+        $checkRemoteRepo = $true
+    }
+    
 } else {
-    Write-Host "No remote found. Skipping attempt to push to remote repository." -ForegroundColor Yellow
+    Write-Host "No remote repository found. Checking if we're online..." -ForegroundColor Yellow
 }
 
 # Push the branch and tag to the remote repository if we're online
-$result = Invoke-WebRequest $remoteRepo -UseBasicParsing -TimeoutSec 2 -ErrorAction SilentlyContinue
+if ($checkRemoteRepo) {
+    Write-Host "Checking if we're online..." -ForegroundColor Yellow
+    $result = Invoke-WebRequest $remoteRepo -UseBasicParsing -TimeoutSec 2 -ErrorAction SilentlyContinue
 
-if ($result.StatusCode -eq 200) {
-    Write-Host "Pushing branch $expectedBranch and tag $expectedBranch to the remote repository..." -ForegroundColor Green
-    git push --set-upstream origin $expectedBranch
-} else {
-    Write-Host "Not connected to the internet. Skipping push to remote repository." -ForegroundColor Yellow
+    if ($result.StatusCode -eq 200) {
+        Write-Host "Pushing branch $expectedBranch and tag $expectedBranch to the remote repository..." -ForegroundColor Green
+        git push --set-upstream origin $expectedBranch
+    } else {
+        Write-Host "Not connected to the internet. Skipping push to remote repository." -ForegroundColor Yellow
+    }
 }
+
 
 # Build and tag the Docker image
 $buildArgOpenfireVersion = $openfireVersion.Replace(".", "_")
