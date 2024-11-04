@@ -12,7 +12,7 @@ param (
 )
 
 # Download Plugins
-# ./Download-Files.ps1 -FileName Plugins.txt
+./Download-Files.ps1 -FileName Plugins.txt
 
 # Download Windows Files
 ./Download-Files.ps1 -FileName Windows.txt
